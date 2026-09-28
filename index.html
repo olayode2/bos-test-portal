@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang='en'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1'><title>BOS AI Sales Agent | Test portal</title>
+<style>
+:root{--g:#0f7a4d;--g2:#e7f4ee;--ink:#1c2321;--mut:#5f6b66;--line:#e2e6e4;--bg:#f6f8f7;--red:#b42318}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg)}
+header{background:#fff;border-bottom:1px solid var(--line);padding:14px 20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+header h1{font-size:17px;margin:0;flex:1;min-width:220px}
+.pill{font-size:12px;padding:3px 9px;border-radius:99px;background:var(--g2);color:var(--g);white-space:nowrap}.pill.off{background:#fdecea;color:var(--red)}
+nav{display:flex;gap:4px;padding:0 20px;background:#fff;border-bottom:1px solid var(--line);overflow-x:auto}
+nav button{border:0;background:none;padding:12px 14px;font:inherit;font-size:14px;color:var(--mut);border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap}
+nav button.active{color:var(--g);border-bottom-color:var(--g);font-weight:600}
+main{max-width:1100px;margin:0 auto;padding:20px}
+.card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:18px;margin-bottom:16px}
+.card h2{font-size:15px;margin:0 0 4px}.hint{color:var(--mut);font-size:13px;margin:0 0 14px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:720px){.grid{grid-template-columns:1fr}}
+label{display:block;font-size:13px;font-weight:600;margin-bottom:5px}label small{font-weight:400;color:var(--mut)}
+input,select,textarea{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:7px;font:inherit;font-size:14px;background:#fff;color:var(--ink)}
+textarea{min-height:88px;resize:vertical}.full{grid-column:1/-1}
+.btn{background:var(--g);color:#fff;border:0;border-radius:8px;padding:11px 18px;font:inherit;font-size:14px;font-weight:600;cursor:pointer}
+.btn:disabled{opacity:.5;cursor:default}.btn.ghost{background:#fff;color:var(--g);border:1px solid var(--g)}
+.msg{margin-top:12px;font-size:14px}.msg.err{color:var(--red)}.msg.ok{color:var(--g)}
+.steps{list-style:none;padding:0;margin:12px 0 0}.steps li{padding:6px 0;font-size:14px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}@media(max-width:720px){.stats{grid-template-columns:1fr 1fr}}
+.stat{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px}.stat b{display:block;font-size:22px}.stat span{font-size:12px;color:var(--mut)}
+.sub{display:flex;gap:6px;margin-bottom:12px}.sub button{border:1px solid var(--line);background:#fff;border-radius:99px;padding:6px 14px;font:inherit;font-size:13px;cursor:pointer}.sub button.active{background:var(--g);color:#fff;border-color:var(--g)}
+.chat{display:grid;grid-template-columns:260px 1fr;min-height:420px;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}@media(max-width:720px){.chat{grid-template-columns:1fr}}
+.people{border-right:1px solid var(--line);overflow-y:auto;max-height:520px}.person{padding:11px 13px;border-bottom:1px solid var(--line);cursor:pointer;font-size:14px}.person.active{background:var(--g2)}.person small{display:block;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.thread{padding:14px;overflow-y:auto;max-height:520px;background:#f3f5f4}.bubble{max-width:78%;padding:8px 11px;border-radius:10px;margin:0 0 8px;font-size:14px;white-space:pre-wrap;word-wrap:break-word}
+.in{background:#fff;border:1px solid var(--line)}.out{background:#dcf5e7;margin-left:auto}.bubble small{display:block;color:var(--mut);font-size:11px;margin-top:3px}
+.tablewrap{overflow-x:auto;background:#fff;border:1px solid var(--line);border-radius:10px}table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:top}th{background:#fafbfa;color:var(--mut);font-weight:600;white-space:nowrap}
+.tag{font-size:11px;padding:2px 8px;border-radius:99px;background:#eef1f0;white-space:nowrap}.empty{color:var(--mut);padding:30px;text-align:center;background:#fff;border:1px solid var(--line);border-radius:10px}
+</style></head><body>
+<header><h1>BOS AI Sales Agent <span class='pill'>Test portal</span></h1><select id='pick' style='width:auto;min-width:210px'></select><span id='conn' class='pill off'>No business selected</span></header>
+<nav><button id='tab-brand' data-tab='brand' class='active'>1. Brand form</button><button id='tab-connect' data-tab='connect'>2. Connect WhatsApp</button><button id='tab-dash' data-tab='dash'>3. Dashboard</button></nav>
+<main>
+<section id='pane-brand'>
+<div class='card'><h2>Your business</h2><p class='hint'>The agent only uses what you write here, so be specific, especially with prices.</p>
+<div class='grid'>
+<div><label>Business name *</label><input id='f_business_name' placeholder='e.g. Mama Tee Kitchen'></div>
+<div><label>Business type</label><select id='f_business_type'><option>Fashion</option><option>Food / Restaurant</option><option>Beauty and skincare</option><option>Electronics</option><option>Health and wellness</option><option>Services</option><option>Other</option></select></div>
+<div><label>Agent name <small>(what the agent calls itself)</small></label><input id='f_agent_name' placeholder='e.g. Ada'></div>
+<div><label>Tone</label><select id='f_tone'><option value='friendly'>Friendly</option><option value='professional'>Professional</option><option value='casual'>Casual Nigerian (Pidgin if the customer uses it)</option></select></div>
+<div class='full'><label>About the business <small>(1 to 3 sentences)</small></label><textarea id='f_about' placeholder='What you sell, where you are, what makes you different'></textarea></div>
+<div class='full'><label>Products and prices * <small>(one per line)</small></label><textarea id='f_products' placeholder='Jollof rice and chicken: N4,500&#10;Fried rice and turkey: N5,500'></textarea></div>
+<div><label>Delivery</label><textarea id='f_delivery' placeholder='Areas you deliver to and the fee for each'></textarea></div>
+<div><label>Opening hours</label><textarea id='f_hours' placeholder='e.g. Mon to Sat, 9am to 8pm'></textarea></div>
+<div class='full'><label>FAQs <small>(question and answer)</small></label><textarea id='f_faqs' placeholder='Do you do pickup? Yes, from our Yaba shop.'></textarea></div>
+</div></div>
+<div class='card'><h2>Selling</h2><p class='hint'>What the agent should find out, and how customers pay.</p>
+<div class='grid'>
+<div class='full'><label>Questions to ask before selling</label><textarea id='f_qualification_questions' placeholder='e.g. How many portions? Delivery area? Delivery address?'></textarea></div>
+<div><label>Bank details <small>(sent when a customer confirms an order)</small></label><textarea id='f_bank_details' placeholder='Account name&#10;Account number&#10;Bank'></textarea></div>
+<div><label>Paystack secret key <small>(optional, sends a payment link instead)</small></label><input id='f_paystack_key' type='password' autocomplete='off' placeholder='sk_test_... (leave blank to keep the current one)'><small id='psState' class='hint'></small></div>
+<div><label>Owner WhatsApp number * <small>(gets order and alert messages)</small></label><input id='f_owner_phone' placeholder='e.g. 08031234567'></div>
+<div><label>Reorder reminder after (days) <small>(leave blank for none)</small></label><input id='f_renewal_days' type='number' min='0' placeholder='e.g. 30'></div>
+</div>
+<p style='margin:16px 0 0'><button id='saveBtn' class='btn'>Save and continue</button></p><div id='brandMsg' class='msg'></div></div>
+</section>
+<section id='pane-connect' style='display:none'>
+<div class='card'><h2>Connect your WhatsApp number</h2><p class='hint'>A Facebook window will open. Log in, choose or create your business, then add a WhatsApp number that is not already on WhatsApp. Meta sends a code to that number to confirm it.</p>
+<div id='connState'></div>
+<button id='connectBtn' class='btn'>Connect WhatsApp</button>
+<div id='connMsg' class='msg'></div><ul id='steps' class='steps'></ul></div>
+</section>
+<section id='pane-dash' style='display:none'>
+<div style='display:flex;gap:10px;align-items:center;margin-bottom:12px'><button id='refreshBtn' class='btn ghost'>Refresh</button><span id='dashNote' class='hint' style='margin:0'></span></div>
+<div id='stats' class='stats'></div>
+<div class='sub'><button data-v='chats' class='active'>Chats</button><button data-v='leads'>Leads</button><button data-v='orders'>Orders</button></div>
+<div id='view'></div>
+</section>
+</main>
+<script>
+const APP_ID='1842239300522797', CONFIG_ID='950738730862435', API='https://prolanz-digital-u76659.vm.elestio.app/webhook/';
+const S={id:null,data:null,code:null,su:null,busy:false,view:'chats',person:null,timer:null};
+const $=i=>document.getElementById(i);
+const esc=s=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/'/g,'&#39;');
+const nice=s=>String(s||'').split('_').join(' ');
+const when=d=>{if(!d)return '';const t=new Date(d);return isNaN(t)?'':t.toLocaleString('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})};
+const naira=n=>'N'+Number(n||0).toLocaleString('en-US');
+const FIELDS=['business_name','business_type','agent_name','about','products','delivery','hours','faqs','tone','qualification_questions','owner_phone','bank_details','paystack_key','renewal_days'];
+function show(t){for(const x of ['brand','connect','dash']){$('tab-'+x).className=x===t?'active':'';$('pane-'+x).style.display=x===t?'block':'none'}if(t==='dash')load();if(t==='connect')paintConn()}
+function setId(id){S.id=id||null;try{if(id){localStorage.setItem('bosClient',id)}else{localStorage.removeItem('bosClient')}}catch(e){}const u=new URL(location.href);if(id){u.searchParams.set('client',id)}else{u.searchParams.delete('client')}history.replaceState(null,'',u.toString());$('pick').value=id||''}
+async function api(path,opts){try{const r=await fetch(API+path,opts);const t=await r.text();let j;try{j=JSON.parse(t)}catch(e){j={ok:false,error:t||('Error '+r.status)}}return j}catch(e){return {ok:false,error:'Network error: '+e.message}}}
+async function loadList(){const j=await api('bos-portal-data');const p=$('pick');p.innerHTML='';const o=document.createElement('option');o.value='';o.textContent='+ New business';p.appendChild(o);(j.clients||[]).forEach(c=>{const x=document.createElement('option');x.value=c.client_id;x.textContent=c.business_name;p.appendChild(x)});p.value=S.id||''}
+function fillForm(c){const f=(c&&c.form)||{};FIELDS.forEach(k=>{const el=$('f_'+k);if(!el)return;if(k==='paystack_key'){el.value='';return}const v=f[k];if(el.tagName==='SELECT'){el.value=v||el.options[0].value}else{el.value=v==null?'':v}});$('psState').textContent=c&&c.has_paystack?'A Paystack key is saved for this business.':''}
+async function load(){if(!S.id){S.data=null;paint();return}$('dashNote').textContent='Loading...';const j=await api('bos-portal-data?client_id='+encodeURIComponent(S.id));if(!j.ok){S.data=null;$('dashNote').textContent=j.error||'Could not load.';paint();return}S.data=j;paint();$('dashNote').textContent='Updated '+new Date().toLocaleTimeString()}
+function paint(){const c=S.data&&S.data.client;const el=$('conn');if(c&&c.connected){el.className='pill';el.textContent='WhatsApp connected'}else{el.className='pill off';el.textContent=S.id?'WhatsApp not connected':'No business selected'}paintConn();paintDash()}
+function paintConn(){const c=S.data&&S.data.client;const box=$('connState');if(!S.id){box.innerHTML=`<p class='hint'>Save the brand form first, then come back here to connect WhatsApp.</p>`;$('connectBtn').disabled=true;return}$('connectBtn').disabled=S.busy;if(c&&c.connected){box.innerHTML=`<p class='msg ok'>Connected. Phone number ID: <b>${esc(c.phone_number_id)}</b></p><p class='hint'>Customers can now message this number and the agent will reply as <b>${esc(c.business_name)}</b>. Connecting again replaces the number.</p>`}else{box.innerHTML=`<p class='hint'>Business: <b>${esc(c?c.business_name:S.id)}</b>. No WhatsApp number connected yet.</p>`}}
+function setMsg(t,c){const m=$('connMsg');m.textContent=t;m.className='msg '+(c||'')}
+function launch(){if(!S.id)return;if(typeof FB==='undefined'){setMsg('Facebook is still loading. Wait a few seconds and try again.','err');return}S.code=null;S.su=null;$('steps').innerHTML='';setMsg('Follow the steps in the Facebook window...','');FB.login(r=>{if(r&&r.authResponse&&r.authResponse.code){S.code=r.authResponse.code;finish()}else{setMsg('The Facebook window was closed before finishing.','err')}},{config_id:CONFIG_ID,response_type:'code',override_default_response_type:true,extras:{setup:{},featureType:'',sessionInfoVersion:'3',version:'v4'}})}
+window.addEventListener('message',e=>{if(typeof e.origin!=='string'||!e.origin.endsWith('facebook.com'))return;let d;try{d=typeof e.data==='string'?JSON.parse(e.data):e.data}catch(x){return}if(!d||d.type!=='WA_EMBEDDED_SIGNUP')return;if(d.event==='CANCEL'){setMsg('Signup was cancelled'+(d.data&&d.data.current_step?' at step: '+d.data.current_step:'')+'.','err');return}if(d.event==='ERROR'){setMsg('Meta error: '+((d.data&&d.data.error_message)||'unknown'),'err');return}if(d.data&&d.data.phone_number_id){S.su={waba_id:d.data.waba_id,phone_number_id:d.data.phone_number_id};finish()}});
+async function finish(){if(S.busy||!S.code)return;if(!S.su){clearTimeout(S.timer);S.timer=setTimeout(()=>{if(!S.su&&!S.busy)setMsg('Facebook finished but did not send the WhatsApp number details. Try again and complete every step in the window.','err')},10000);setMsg('Waiting for the WhatsApp number details from Meta...','');return}clearTimeout(S.timer);S.busy=true;paintConn();setMsg('Connecting your number. This takes a few seconds...','');const j=await api('bos-portal-connect',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({client_id:S.id,code:S.code,waba_id:S.su.waba_id,phone_number_id:S.su.phone_number_id})});S.busy=false;S.code=null;$('steps').innerHTML=(j.steps||[]).map(s=>`<li>${s.ok?'&#9989;':'&#10060;'} ${esc(s.step)}: <span class='hint'>${esc(s.detail)}</span></li>`).join('');if(j.connected){setMsg('WhatsApp connected. Send a message to the number to test the agent.','ok')}else{setMsg((j.errors&&j.errors.join(' '))||j.error||'Connection failed. See the steps below.','err')}await load()}
+function paintDash(){const d=S.data;if(!S.id||!d){$('stats').innerHTML='';$('view').innerHTML=`<div class='empty'>Pick a business at the top, or save the brand form first.</div>`;return}const L=d.leads||[],O=d.orders||[],C=d.conversations||[];const hot=L.filter(l=>['interested','qualified','ready_to_buy'].includes(l.status)).length;const val=O.reduce((a,o)=>a+Number(o.total||0),0);$('stats').innerHTML=[['Leads',L.length],['Interested or better',hot],['Orders',O.length],['Order value',naira(val)]].map(s=>`<div class='stat'><b>${s[1]}</b><span>${s[0]}</span></div>`).join('');for(const b of document.querySelectorAll('.sub button'))b.className=b.dataset.v===S.view?'active':'';if(S.view==='chats')paintChats(L,C);else if(S.view==='leads')paintLeads(L);else paintOrders(O)}
+function paintChats(L,C){const names={};L.forEach(l=>{names[l.phone]=l.name});const by={};C.forEach(m=>{(by[m.phone]=by[m.phone]||[]).push(m)});const phones=Object.keys(by).sort((a,b)=>String(by[b][by[b].length-1].at).localeCompare(String(by[a][by[a].length-1].at)));if(!phones.length){$('view').innerHTML=`<div class='empty'>No chats yet. When customers message the WhatsApp number, their chats show here.</div>`;return}if(!S.person||!by[S.person])S.person=phones[0];const list=phones.map(p=>{const last=by[p][by[p].length-1];return `<div class='person${p===S.person?' active':''}' data-p='${esc(p)}'><b>${esc(names[p]||'+'+p)}</b><small>${esc(last.message)}</small></div>`}).join('');const th=by[S.person].map(m=>`<div class='bubble ${m.direction==='outbound'?'out':'in'}'>${esc(m.message)}<small>${m.kind&&m.kind!=='chat'?esc(nice(m.kind))+' &middot; ':''}${when(m.at)}</small></div>`).join('');$('view').innerHTML=`<div class='chat'><div class='people'>${list}</div><div class='thread' id='thread'><p class='hint'>${esc(names[S.person]||'')} +${esc(S.person)}</p>${th}</div></div>`;document.querySelectorAll('.person').forEach(el=>{el.onclick=()=>{S.person=el.dataset.p;paintDash()}});const t=$('thread');t.scrollTop=t.scrollHeight}
+function paintLeads(L){if(!L.length){$('view').innerHTML=`<div class='empty'>No leads yet.</div>`;return}const rows=L.slice().sort((a,b)=>String(b.last_at).localeCompare(String(a.last_at))).map(l=>`<tr><td><b>${esc(l.name||'Unknown')}</b><br><span class='hint'>+${esc(l.phone)}</span></td><td>${esc(l.interest)}</td><td><span class='tag'>${esc(nice(l.status))}</span></td><td>${esc(l.score)}</td><td>${esc(l.notes)}</td><td>${when(l.last_at)}</td><td>${Number(l.follow_ups)>=3?'Stopped':when(l.next_follow_up)}</td></tr>`).join('');$('view').innerHTML=`<div class='tablewrap'><table><tr><th>Customer</th><th>Wants</th><th>Status</th><th>Score</th><th>What we know</th><th>Last message</th><th>Next follow-up</th></tr>${rows}</table></div>`}
+function paintOrders(O){if(!O.length){$('view').innerHTML=`<div class='empty'>No orders yet.</div>`;return}const rows=O.slice().sort((a,b)=>String(b.created).localeCompare(String(a.created))).map(o=>`<tr><td>${esc(o.order_id)}<br><span class='hint'>${when(o.created)}</span></td><td><b>${esc(o.name||'Unknown')}</b><br><span class='hint'>+${esc(o.phone)}</span></td><td>${esc(o.items)}</td><td>${naira(o.total)}</td><td>${esc(o.address)}</td><td><span class='tag'>${esc(nice(o.status))}</span></td><td style='white-space:pre-wrap'>${esc(o.receipt_check)}</td></tr>`).join('');$('view').innerHTML=`<div class='tablewrap'><table><tr><th>Order</th><th>Customer</th><th>Items</th><th>Total</th><th>Address</th><th>Status</th><th>Receipt check</th></tr>${rows}</table></div>`}
+async function saveBrand(){const f={};FIELDS.forEach(k=>{const el=$('f_'+k);if(el)f[k]=el.value.trim()});const b=$('saveBtn');const m=$('brandMsg');b.disabled=true;m.className='msg';m.textContent='Saving...';const j=await api('bos-portal-brand',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({client_id:S.id,form:f})});b.disabled=false;if(!j.ok){m.className='msg err';m.textContent=(j.errors&&j.errors.join('. '))||j.error||'Could not save.';return}setId(j.client_id);await loadList();await load();fillForm(S.data&&S.data.client);m.className='msg ok';m.textContent='Saved. The agent prompt was built from your answers.';if(!(S.data&&S.data.client&&S.data.client.connected))show('connect')}
+document.querySelectorAll('nav button').forEach(b=>{b.onclick=()=>show(b.dataset.tab)});
+document.querySelectorAll('.sub button').forEach(b=>{b.onclick=()=>{S.view=b.dataset.v;paintDash()}});
+$('saveBtn').onclick=saveBrand;$('connectBtn').onclick=launch;$('refreshBtn').onclick=load;
+$('pick').onchange=async e=>{setId(e.target.value);S.data=null;S.person=null;$('brandMsg').textContent='';$('connMsg').textContent='';$('steps').innerHTML='';if(!S.id){fillForm(null);paint();show('brand');return}await load();fillForm(S.data&&S.data.client)};
+window.fbAsyncInit=function(){FB.init({appId:APP_ID,autoLogAppEvents:true,xfbml:true,version:'v25.0'})};
+(async()=>{let id=new URL(location.href).searchParams.get('client');if(!id){try{id=localStorage.getItem('bosClient')}catch(e){}}await loadList();if(id){setId(id);await load();if(S.data&&S.data.client){fillForm(S.data.client)}else{setId(null)}}paint()})();
+</script>
+<script async defer crossorigin='anonymous' src='https://connect.facebook.net/en_US/sdk.js'></script>
+</body></html>
