@@ -1,106 +1,231 @@
 <!doctype html>
-<html lang='en'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1'><title>BOS AI Sales Agent | Test portal</title>
+<html lang='en'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1'><title>Order Padi | AI Sales Agent (test portal)</title>
 <style>
-:root{--g:#0f7a4d;--g2:#e7f4ee;--ink:#1c2321;--mut:#5f6b66;--line:#e2e6e4;--bg:#f6f8f7;--red:#b42318}
+:root{--g:#0f7a4d;--g2:#e7f4ee;--ink:#1c2321;--mut:#5f6b66;--line:#e2e6e4;--bg:#f6f8f7;--red:#b42318;--red2:#fdecea;--amb:#9a6400;--amb2:#fff4dc}
 *{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg)}
 header{background:#fff;border-bottom:1px solid var(--line);padding:14px 20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
 header h1{font-size:17px;margin:0;flex:1;min-width:220px}
-.pill{font-size:12px;padding:3px 9px;border-radius:99px;background:var(--g2);color:var(--g);white-space:nowrap}.pill.off{background:#fdecea;color:var(--red)}
+.pill{font-size:12px;padding:3px 9px;border-radius:99px;background:var(--g2);color:var(--g);white-space:nowrap}.pill.off{background:var(--red2);color:var(--red)}.pill.warn{background:var(--amb2);color:var(--amb)}
 nav{display:flex;gap:4px;padding:0 20px;background:#fff;border-bottom:1px solid var(--line);overflow-x:auto}
 nav button{border:0;background:none;padding:12px 14px;font:inherit;font-size:14px;color:var(--mut);border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap}
 nav button.active{color:var(--g);border-bottom-color:var(--g);font-weight:600}
 main{max-width:1100px;margin:0 auto;padding:20px}
 .card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:18px;margin-bottom:16px}
 .card h2{font-size:15px;margin:0 0 4px}.hint{color:var(--mut);font-size:13px;margin:0 0 14px}
+.head{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;margin-bottom:14px}.head h2{margin:2px 0 4px;font-size:20px}.eyebrow{font-size:12px;color:var(--mut);text-transform:uppercase;letter-spacing:.04em}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:720px){.grid{grid-template-columns:1fr}}
 label{display:block;font-size:13px;font-weight:600;margin-bottom:5px}label small{font-weight:400;color:var(--mut)}
 input,select,textarea{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:7px;font:inherit;font-size:14px;background:#fff;color:var(--ink)}
+input[type=checkbox]{width:auto;margin-right:8px}
 textarea{min-height:88px;resize:vertical}.full{grid-column:1/-1}
 .btn{background:var(--g);color:#fff;border:0;border-radius:8px;padding:11px 18px;font:inherit;font-size:14px;font-weight:600;cursor:pointer}
-.btn:disabled{opacity:.5;cursor:default}.btn.ghost{background:#fff;color:var(--g);border:1px solid var(--g)}
+.btn:disabled{opacity:.5;cursor:default}.btn.ghost{background:#fff;color:var(--g);border:1px solid var(--g)}.btn.sm{padding:7px 12px;font-size:13px}.btn.red{background:#fff;color:var(--red);border:1px solid var(--red)}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
 .msg{margin-top:12px;font-size:14px}.msg.err{color:var(--red)}.msg.ok{color:var(--g)}
+.note{background:var(--g2);border-radius:8px;padding:10px 12px;font-size:13px;color:var(--ink);margin-top:14px}
 .steps{list-style:none;padding:0;margin:12px 0 0}.steps li{padding:6px 0;font-size:14px}
+.checks{list-style:none;padding:0;margin:0}.checks li{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;margin-bottom:8px;background:#f8f7f3;border:1px solid #ebe8df;border-radius:8px;font-size:14px;transition:background .3s,border-color .3s}.checks li.ok{background:var(--g2);border-color:#bfe3cf;color:var(--g)}.checks li.ok small{color:#3d7a5c}.checks i{font-style:normal;width:20px;flex:none}.checks small{display:block;color:var(--mut)}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}@media(max-width:720px){.stats{grid-template-columns:1fr 1fr}}
-.stat{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px}.stat b{display:block;font-size:22px}.stat span{font-size:12px;color:var(--mut)}
-.sub{display:flex;gap:6px;margin-bottom:12px}.sub button{border:1px solid var(--line);background:#fff;border-radius:99px;padding:6px 14px;font:inherit;font-size:13px;cursor:pointer}.sub button.active{background:var(--g);color:#fff;border-color:var(--g)}
-.chat{display:grid;grid-template-columns:260px 1fr;min-height:420px;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}@media(max-width:720px){.chat{grid-template-columns:1fr}}
-.people{border-right:1px solid var(--line);overflow-y:auto;max-height:520px}.person{padding:11px 13px;border-bottom:1px solid var(--line);cursor:pointer;font-size:14px}.person.active{background:var(--g2)}.person small{display:block;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.thread{padding:14px;overflow-y:auto;max-height:520px;background:#f3f5f4}.bubble{max-width:78%;padding:8px 11px;border-radius:10px;margin:0 0 8px;font-size:14px;white-space:pre-wrap;word-wrap:break-word}
-.in{background:#fff;border:1px solid var(--line)}.out{background:#dcf5e7;margin-left:auto}.bubble small{display:block;color:var(--mut);font-size:11px;margin-top:3px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px}.stat b{display:block;font-size:22px}.stat span{font-size:12px;color:var(--mut)}.stat em{display:block;font-style:normal;font-size:12px;color:var(--mut);margin-top:2px}
+.rows{list-style:none;padding:0;margin:0}.rows li{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}.rows li:last-child{border:0}.rows small{display:block;color:var(--mut);font-size:12px;margin-top:2px}
+.badge{font-size:11px;font-weight:600;padding:3px 9px;border-radius:99px;background:var(--g2);color:var(--g);white-space:nowrap}.badge.warn{background:var(--amb2);color:var(--amb)}.badge.bad{background:var(--red2);color:var(--red)}.badge.mute{background:#eef1f0;color:var(--mut)}
+.sub{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}.sub button{border:1px solid var(--line);background:#fff;border-radius:99px;padding:6px 14px;font:inherit;font-size:13px;cursor:pointer}.sub button.active{background:var(--g);color:#fff;border-color:var(--g)}
+.chat{display:grid;grid-template-columns:280px 1fr;min-height:420px;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}@media(max-width:720px){.chat{grid-template-columns:1fr}}
+.people{border-right:1px solid var(--line);overflow-y:auto;max-height:560px}.person{padding:11px 13px;border-bottom:1px solid var(--line);cursor:pointer;font-size:14px}.person.active{background:var(--g2)}.person small{display:block;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:2px 0 5px}
+.side{display:flex;flex-direction:column}.thread{padding:14px;overflow-y:auto;max-height:420px;min-height:260px;background:#f3f5f4;flex:1}.bubble{max-width:78%;padding:8px 11px;border-radius:10px;margin:0 0 8px;font-size:14px;white-space:pre-wrap;word-wrap:break-word}
+.in{background:#fff;border:1px solid var(--line)}.out{background:#dcf5e7;margin-left:auto}.human{background:#fff4dc;margin-left:auto}.sys{background:none;border:1px dashed var(--line);color:var(--mut);font-size:12px;max-width:100%;text-align:center}.bubble small{display:block;color:var(--mut);font-size:11px;margin-top:3px}
+.bar{padding:12px 14px;border-top:1px solid var(--line);background:#fff}.bar textarea{min-height:60px}
 .tablewrap{overflow-x:auto;background:#fff;border:1px solid var(--line);border-radius:10px}table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:top}th{background:#fafbfa;color:var(--mut);font-weight:600;white-space:nowrap}
-.tag{font-size:11px;padding:2px 8px;border-radius:99px;background:#eef1f0;white-space:nowrap}.empty{color:var(--mut);padding:30px;text-align:center;background:#fff;border:1px solid var(--line);border-radius:10px}
+.empty{color:var(--mut);padding:30px;text-align:center;background:#fff;border:1px solid var(--line);border-radius:10px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:820px){.two{grid-template-columns:1fr}}
+.approve{background:#fafbfa;border:1px solid var(--line);border-radius:10px;padding:14px}
+.kv{font-size:18px;font-weight:700;margin-top:4px}
 </style></head><body>
-<header><h1>BOS AI Sales Agent <span class='pill'>Test portal</span></h1><select id='pick' style='width:auto;min-width:210px'></select><span id='conn' class='pill off'>No business selected</span></header>
-<nav><button id='tab-brand' data-tab='brand' class='active'>1. Brand form</button><button id='tab-connect' data-tab='connect'>2. Connect WhatsApp</button><button id='tab-dash' data-tab='dash'>3. Dashboard</button></nav>
+<header><h1>Order Padi <span class='pill'>AI Sales Agent</span> <span class='pill warn'>Test portal</span></h1><select id='pick' style='width:auto;min-width:210px'></select><span id='conn' class='pill off'>No business selected</span></header>
+<nav id='nav'><button data-tab='business' class='active'>1 Business</button><button data-tab='whatsapp'>2 WhatsApp</button><button data-tab='knowledge'>3 AI Knowledge</button><button data-tab='approval'>4 Approval</button><button data-tab='live'>5 Live</button></nav>
 <main>
-<section id='pane-brand'>
-<div class='card'><h2>Your business</h2><p class='hint'>The agent only uses what you write here, so be specific, especially with prices.</p>
-<div class='grid'>
+
+<section id='pane-business'>
+<div class='head'><div><div class='eyebrow'>Step 1</div><h2>Business Setup</h2><p class='hint'>Tell Order Padi what the business sells and how it should operate.</p></div><button class='btn' id='saveBiz'>Save &amp; Continue</button></div>
+<div class='card'><div class='grid'>
 <div><label>Business name *</label><input id='f_business_name' placeholder='e.g. Mama Tee Kitchen'></div>
-<div><label>Business type</label><select id='f_business_type'><option>Fashion</option><option>Food / Restaurant</option><option>Beauty and skincare</option><option>Electronics</option><option>Health and wellness</option><option>Services</option><option>Other</option></select></div>
-<div><label>Agent name <small>(what the agent calls itself)</small></label><input id='f_agent_name' placeholder='e.g. Ada'></div>
-<div><label>Tone</label><select id='f_tone'><option value='friendly'>Friendly</option><option value='professional'>Professional</option><option value='casual'>Casual Nigerian (Pidgin if the customer uses it)</option></select></div>
-<div class='full'><label>About the business <small>(1 to 3 sentences)</small></label><textarea id='f_about' placeholder='What you sell, where you are, what makes you different'></textarea></div>
-<div class='full'><label>Products and prices * <small>(one per line)</small></label><textarea id='f_products' placeholder='Jollof rice and chicken: N4,500&#10;Fried rice and turkey: N5,500'></textarea></div>
-<div><label>Delivery</label><textarea id='f_delivery' placeholder='Areas you deliver to and the fee for each'></textarea></div>
-<div><label>Opening hours</label><textarea id='f_hours' placeholder='e.g. Mon to Sat, 9am to 8pm'></textarea></div>
-<div class='full'><label>FAQs <small>(question and answer)</small></label><textarea id='f_faqs' placeholder='Do you do pickup? Yes, from our Yaba shop.'></textarea></div>
+<div><label>Agent name <small>(what the agent calls itself)</small></label><input id='f_agent_name' placeholder='Order Padi'></div>
+<div><label>Business type</label><select id='f_business_type'><option>Fashion</option><option>Food / Restaurant</option><option>Beauty and skincare</option><option>Electronics</option><option>Health and wellness</option><option>Real estate</option><option>Services</option><option>Other</option></select></div>
+<div><label>Agent tone</label><select id='f_tone'><option value='friendly_professional'>Friendly &amp; professional</option><option value='direct'>Direct &amp; conversational</option><option value='premium'>Premium &amp; polished</option></select></div>
+<div class='full'><label>What does the business sell? <small>(1 to 3 sentences)</small></label><textarea id='f_about' placeholder='What you sell, where you are, what makes you different'></textarea></div>
+<div class='full'><label>Products / Services * <small>(one per line: name, price, sizes or colours, and if it is available)</small></label><textarea id='f_products' placeholder='Jollof rice and chicken: N4,500 (available)&#10;Ankara gown, sizes 8 to 16, red or blue: N25,000 (size 16 sold out)&#10;Premium package: N85,000'></textarea></div>
 </div></div>
-<div class='card'><h2>Selling</h2><p class='hint'>What the agent should find out, and how customers pay.</p>
-<div class='grid'>
-<div class='full'><label>Questions to ask before selling</label><textarea id='f_qualification_questions' placeholder='e.g. How many portions? Delivery area? Delivery address?'></textarea></div>
+<div class='card'><h2>Payment &amp; Delivery</h2><p class='hint'>How customers pay and how they get their order.</p><div class='grid'>
+<div><label>Delivery <small>(areas, fees and timelines)</small></label><textarea id='f_delivery' placeholder='Yaba and Surulere: N1,500, same day&#10;Lekki: N4,000&#10;Pickup is free'></textarea></div>
+<div><label>Business hours</label><textarea id='f_hours' placeholder='Mon to Sat, 8am to 7pm'></textarea></div>
 <div><label>Bank details <small>(sent when a customer confirms an order)</small></label><textarea id='f_bank_details' placeholder='Account name&#10;Account number&#10;Bank'></textarea></div>
-<div><label>Paystack secret key <small>(optional, sends a payment link instead)</small></label><input id='f_paystack_key' type='password' autocomplete='off' placeholder='sk_test_... (leave blank to keep the current one)'><small id='psState' class='hint'></small></div>
-<div><label>Owner WhatsApp number * <small>(gets order and alert messages)</small></label><input id='f_owner_phone' placeholder='e.g. 08031234567'></div>
-<div><label>Reorder reminder after (days) <small>(leave blank for none)</small></label><input id='f_renewal_days' type='number' min='0' placeholder='e.g. 30'></div>
+<div><label>Owner WhatsApp number * <small>(gets orders and human handoff alerts)</small></label><input id='f_owner_phone' placeholder='e.g. 08031234567'></div>
 </div>
-<p style='margin:16px 0 0'><button id='saveBtn' class='btn'>Save and continue</button></p><div id='brandMsg' class='msg'></div></div>
+<div class='note'>Order Padi will use this information as part of its approved business knowledge. Do not add information the business cannot fulfil.</div>
+<div id='bizMsg' class='msg'></div></div>
 </section>
-<section id='pane-connect' style='display:none'>
-<div class='card'><h2>Connect your WhatsApp number</h2><p class='hint'>A Facebook window will open. Log in, choose or create your business, then add a WhatsApp number that is not already on WhatsApp. Meta sends a code to that number to confirm it.</p>
+
+<section id='pane-whatsapp' style='display:none'>
+<div class='head'><div><div class='eyebrow'>Step 2</div><h2>Connect WhatsApp</h2><p class='hint'>Connect the business WhatsApp number so Order Padi can handle customer conversations.</p></div><button class='btn' data-go='knowledge'>Continue to AI Knowledge</button></div>
+<div class='two'>
+<div class='card'><h2>WhatsApp Business</h2><p class='hint'>A Facebook window opens. Log in, choose or create the business portfolio, then add the number. Meta sends a code to confirm it.</p>
 <div id='connState'></div>
 <button id='connectBtn' class='btn'>Connect WhatsApp</button>
 <div id='connMsg' class='msg'></div><ul id='steps' class='steps'></ul></div>
+<div class='card'><h2>Connection checklist</h2><ul class='checks' id='connChecks'></ul></div>
+</div>
 </section>
-<section id='pane-dash' style='display:none'>
-<div style='display:flex;gap:10px;align-items:center;margin-bottom:12px'><button id='refreshBtn' class='btn ghost'>Refresh</button><span id='dashNote' class='hint' style='margin:0'></span></div>
-<div id='stats' class='stats'></div>
-<div class='sub'><button data-v='chats' class='active'>Chats</button><button data-v='leads'>Leads</button><button data-v='orders'>Orders</button></div>
+
+<section id='pane-knowledge' style='display:none'>
+<div class='head'><div><div class='eyebrow'>Step 3</div><h2>AI Knowledge</h2><p class='hint'>Review and complete what Order Padi knows before it speaks to real customers.</p></div><button class='btn' id='saveKnow'>Save Knowledge</button></div>
+<div class='stats' id='knowStats'></div>
+<div class='card'><h2>Approved knowledge</h2><ul class='rows' id='knowRows'></ul></div>
+<div class='card'><div class='grid'>
+<div class='full'><label>FAQs <small>(question and approved answer)</small></label><textarea id='f_faqs' placeholder='Do you do pickup? Yes, from our Yaba shop.&#10;Do you deliver on Sundays? No, Monday to Saturday only.'></textarea></div>
+<div class='full'><label>Offers &amp; promotions <small>(what it is, who qualifies, when it ends)</small></label><textarea id='f_offers' placeholder='Free delivery on orders above N20,000. Ends 31 December 2026.&#10;Leave blank if there are no offers. The agent will then never give discounts.'></textarea></div>
+<div class='full'><label>Escalation rules <small>(extra cases to always hand to a human)</small></label><textarea id='f_escalation_rules' placeholder='Orders above N500,000&#10;Any question about bulk or wholesale prices'></textarea></div>
+<div><label>Questions to ask before selling</label><textarea id='f_qualification_questions' placeholder='What would you like and how many? Delivery area? When do you need it?'></textarea></div>
+<div><label>Reorder reminder after (days) <small>(leave blank for none)</small></label><input id='f_renewal_days' type='number' min='0' placeholder='e.g. 30'></div>
+</div>
+<div class='note'><b>Always on:</b> Order Padi hands the chat to a human and pauses itself when a customer asks for a person or manager, wants a refund or exchange outside your policy, asks for a discount that is not an approved offer, complains, needs an exception, or raises a sensitive issue. It never invents answers or promises what the business cannot deliver.</div>
+<div id='knowMsg' class='msg'></div></div>
+</section>
+
+<section id='pane-approval' style='display:none'>
+<div class='head'><div><div class='eyebrow'>Step 4</div><h2>Approval &amp; Launch</h2><p class='hint'>The client approves the agent's knowledge and sales behaviour before going live.</p></div></div>
+<div class='two'>
+<div class='card'><h2>Pre-launch checklist</h2><ul class='checks' id='preChecks'></ul></div>
+<div class='card'><h2>Client approval</h2><div id='approveBox'></div><div id='approveMsg' class='msg'></div></div>
+</div>
+<div class='card'><h2>Test conversation</h2><p class='hint'>Chat with Order Padi as if you were a customer. Same AI and rules, but nothing is sent on WhatsApp or saved.</p>
+<div class='thread' id='testThread' style='border:1px solid var(--line);border-radius:10px'></div>
+<div class='acts'><input id='testInput' placeholder='e.g. How much is delivery to Lekki?' style='flex:1;min-width:200px'><button class='btn' id='testSend'>Send</button><button class='btn ghost' id='testReset'>Restart test</button></div>
+<div id='testMsg' class='msg'></div></div>
+</section>
+
+<section id='pane-live' style='display:none'>
+<div class='card'><div class='head' style='margin:0'><div><div class='eyebrow'>AI Sales Agent</div><h2 id='liveName'>Order Padi</h2><p class='hint' style='margin:0'>Your WhatsApp AI sales agent that qualifies leads, follows up, closes orders and supports renewals.</p></div><div><span id='liveBadge' class='badge mute'>Not live</span></div></div></div>
+<div class='stats' id='kpi1'></div>
+<div class='card'><h2>Order Padi setup</h2><ul class='rows' id='setupRows'></ul></div>
+<div class='stats' id='kpi2'></div>
+<div style='display:flex;gap:10px;align-items:center;margin-bottom:12px'><button id='refreshBtn' class='btn ghost sm'>Refresh</button><span id='dashNote' class='hint' style='margin:0'></span></div>
+<div class='sub' id='subnav'><button data-v='chats' class='active'>Chats</button><button data-v='leads'>Leads</button><button data-v='orders'>Orders</button><button data-v='handoff'>Human handoff</button></div>
 <div id='view'></div>
 </section>
 </main>
 <script>
 const APP_ID='1842239300522797', CONFIG_ID='950738730862435', API='https://prolanz-digital-u76659.vm.elestio.app/webhook/';
-const S={id:null,data:null,code:null,su:null,busy:false,view:'chats',person:null,timer:null};
+const newSession=()=>'s'+Date.now().toString(36)+Math.random().toString(36).slice(2,8);
+const S={id:null,data:null,code:null,su:null,busy:false,view:'chats',person:null,timer:null,tab:'business',tested:false,session:newSession()};
 const $=i=>document.getElementById(i);
 const esc=s=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/'/g,'&#39;');
 const nice=s=>String(s||'').split('_').join(' ');
+const ts=d=>{const t=new Date(d).getTime();return isNaN(t)?0:t};
 const when=d=>{if(!d)return '';const t=new Date(d);return isNaN(t)?'':t.toLocaleString('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})};
-const naira=n=>'N'+Number(n||0).toLocaleString('en-US');
-const FIELDS=['business_name','business_type','agent_name','about','products','delivery','hours','faqs','tone','qualification_questions','owner_phone','bank_details','paystack_key','renewal_days'];
-function show(t){for(const x of ['brand','connect','dash']){$('tab-'+x).className=x===t?'active':'';$('pane-'+x).style.display=x===t?'block':'none'}if(t==='dash')load();if(t==='connect')paintConn()}
-function setId(id){S.id=id||null;try{if(id){localStorage.setItem('bosClient',id)}else{localStorage.removeItem('bosClient')}}catch(e){}const u=new URL(location.href);if(id){u.searchParams.set('client',id)}else{u.searchParams.delete('client')}history.replaceState(null,'',u.toString());$('pick').value=id||''}
+const naira=n=>{n=Number(n||0);return n>=1000000?'N'+(n/1000000).toFixed(1).replace(/\.0$/,'')+'m':'N'+n.toLocaleString('en-US')};
+const lines=s=>String(s||'').split('\n').map(x=>x.trim()).filter(Boolean);
+const badge=(t,c)=>`<span class='badge ${c||''}'>${esc(t)}</span>`;
+const FIELDS=['business_name','business_type','agent_name','about','products','delivery','hours','faqs','tone','qualification_questions','owner_phone','bank_details','renewal_days','offers','escalation_rules'];
+const OLD_TONES={friendly:'friendly_professional',professional:'friendly_professional',casual:'direct'};
+const client=()=>S.data&&S.data.client;
+function getForm(){const f={};FIELDS.forEach(k=>{const el=$('f_'+k);if(el)f[k]=el.value.trim()});return f}
 async function api(path,opts){try{const r=await fetch(API+path,opts);const t=await r.text();let j;try{j=JSON.parse(t)}catch(e){j={ok:false,error:t||('Error '+r.status)}}return j}catch(e){return {ok:false,error:'Network error: '+e.message}}}
+const post=(path,body)=>api(path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+
+function show(t){S.tab=t;document.querySelectorAll('#nav button').forEach(b=>b.className=b.dataset.tab===t?'active':'');['business','whatsapp','knowledge','approval','live'].forEach(x=>$('pane-'+x).style.display=x===t?'block':'none');if(t==='live')load();paint();window.scrollTo(0,0)}
+function setId(id){S.id=id||null;try{if(id){localStorage.setItem('bosClient',id)}else{localStorage.removeItem('bosClient')}}catch(e){}const u=new URL(location.href);if(id){u.searchParams.set('client',id)}else{u.searchParams.delete('client')}history.replaceState(null,'',u.toString());$('pick').value=id||''}
 async function loadList(){const j=await api('bos-portal-data');const p=$('pick');p.innerHTML='';const o=document.createElement('option');o.value='';o.textContent='+ New business';p.appendChild(o);(j.clients||[]).forEach(c=>{const x=document.createElement('option');x.value=c.client_id;x.textContent=c.business_name;p.appendChild(x)});p.value=S.id||''}
-function fillForm(c){const f=(c&&c.form)||{};FIELDS.forEach(k=>{const el=$('f_'+k);if(!el)return;if(k==='paystack_key'){el.value='';return}const v=f[k];if(el.tagName==='SELECT'){el.value=v||el.options[0].value}else{el.value=v==null?'':v}});$('psState').textContent=c&&c.has_paystack?'A Paystack key is saved for this business.':''}
-async function load(){if(!S.id){S.data=null;paint();return}$('dashNote').textContent='Loading...';const j=await api('bos-portal-data?client_id='+encodeURIComponent(S.id));if(!j.ok){S.data=null;$('dashNote').textContent=j.error||'Could not load.';paint();return}S.data=j;paint();$('dashNote').textContent='Updated '+new Date().toLocaleTimeString()}
-function paint(){const c=S.data&&S.data.client;const el=$('conn');if(c&&c.connected){el.className='pill';el.textContent='WhatsApp connected'}else{el.className='pill off';el.textContent=S.id?'WhatsApp not connected':'No business selected'}paintConn();paintDash()}
-function paintConn(){const c=S.data&&S.data.client;const box=$('connState');if(!S.id){box.innerHTML=`<p class='hint'>Save the brand form first, then come back here to connect WhatsApp.</p>`;$('connectBtn').disabled=true;return}$('connectBtn').disabled=S.busy;if(c&&c.connected){box.innerHTML=`<p class='msg ok'>Connected. Phone number ID: <b>${esc(c.phone_number_id)}</b></p><p class='hint'>Customers can now message this number and the agent will reply as <b>${esc(c.business_name)}</b>. Connecting again replaces the number.</p>`}else{box.innerHTML=`<p class='hint'>Business: <b>${esc(c?c.business_name:S.id)}</b>. No WhatsApp number connected yet.</p>`}}
+function fillForm(c){const f=(c&&c.form)||{};FIELDS.forEach(k=>{const el=$('f_'+k);if(!el)return;let v=f[k];if(k==='tone')v=OLD_TONES[v]||v;if(el.tagName==='SELECT'){el.value=v||el.options[0].value;if(!el.value)el.value=el.options[0].value}else{el.value=v==null?'':v}})}
+async function load(silent){if(!S.id){S.data=null;paint();return}if(!silent)$('dashNote').textContent='Loading...';const j=await api('bos-portal-data?client_id='+encodeURIComponent(S.id));if(!j.ok){S.data=null;$('dashNote').textContent=j.error||'Could not load.';paint();return}S.data=j;paint();$('dashNote').textContent='Updates automatically every 15 seconds. Last update '+new Date().toLocaleTimeString()}
+
+function agentState(){const c=client();if(!S.id)return ['No business selected','off'];if(!c||!c.connected)return ['WhatsApp not connected','off'];if(!c.approved)return ['Waiting for approval','warn'];return ['Agent live','']}
+function paint(){const st=agentState();const el=$('conn');el.className='pill '+st[1];el.textContent=st[0];paintConn();paintKnowledge();paintApproval();paintLive()}
+
+/* STEP 1 and 3: save */
+async function saveForm(btn,msgEl,okText,next){const b=$(btn),m=$(msgEl);b.disabled=true;m.className='msg';m.textContent='Saving...';const j=await post('bos-portal-brand',{client_id:S.id,form:getForm()});b.disabled=false;if(!j.ok){m.className='msg err';m.textContent=(j.errors&&j.errors.join('. '))||j.error||'Could not save.';return}setId(j.client_id);await loadList();await load();fillForm(client());m.className='msg ok';m.textContent=okText;show(next())}
+
+/* STEP 2: WhatsApp */
+function paintConn(){const c=client();const box=$('connState');const ok=!!(c&&c.connected);$('connChecks').innerHTML=checks([['Business details saved',!!S.id],['WhatsApp Business connection authorised',ok],['Number verified',ok],['Messaging channel active',ok],['Ready for AI approval',ok&&!!(c&&c.form&&c.form.products)]]);if(!S.id){box.innerHTML=`<p class='hint'>Save the business details in step 1 first.</p>`;$('connectBtn').disabled=true;return}$('connectBtn').disabled=S.busy;if(ok){box.innerHTML=`<div class='approve'><div class='eyebrow'>Connected number</div><div class='kv'>ID ${esc(c.phone_number_id)}</div><div style='margin-top:8px'>${badge('Connected & verified')}</div></div><p class='hint' style='margin-top:10px'>Connecting again replaces the number.</p>`;$('connectBtn').textContent='Manage connection'}else{box.innerHTML=`<p class='hint'>Business: <b>${esc(c?c.business_name:S.id)}</b>. No WhatsApp number connected yet.</p>`;$('connectBtn').textContent='Connect WhatsApp'}}
 function setMsg(t,c){const m=$('connMsg');m.textContent=t;m.className='msg '+(c||'')}
 function launch(){if(!S.id)return;if(typeof FB==='undefined'){setMsg('Facebook is still loading. Wait a few seconds and try again.','err');return}S.code=null;S.su=null;$('steps').innerHTML='';setMsg('Follow the steps in the Facebook window...','');FB.login(r=>{if(r&&r.authResponse&&r.authResponse.code){S.code=r.authResponse.code;finish()}else{setMsg('The Facebook window was closed before finishing.','err')}},{config_id:CONFIG_ID,response_type:'code',override_default_response_type:true,extras:{setup:{},featureType:'',sessionInfoVersion:'3',version:'v4'}})}
 window.addEventListener('message',e=>{if(typeof e.origin!=='string'||!e.origin.endsWith('facebook.com'))return;let d;try{d=typeof e.data==='string'?JSON.parse(e.data):e.data}catch(x){return}if(!d||d.type!=='WA_EMBEDDED_SIGNUP')return;if(d.event==='CANCEL'){setMsg('Signup was cancelled'+(d.data&&d.data.current_step?' at step: '+d.data.current_step:'')+'.','err');return}if(d.event==='ERROR'){setMsg('Meta error: '+((d.data&&d.data.error_message)||'unknown'),'err');return}if(d.data&&d.data.phone_number_id){S.su={waba_id:d.data.waba_id,phone_number_id:d.data.phone_number_id};finish()}});
-async function finish(){if(S.busy||!S.code)return;if(!S.su){clearTimeout(S.timer);S.timer=setTimeout(()=>{if(!S.su&&!S.busy)setMsg('Facebook finished but did not send the WhatsApp number details. Try again and complete every step in the window.','err')},10000);setMsg('Waiting for the WhatsApp number details from Meta...','');return}clearTimeout(S.timer);S.busy=true;paintConn();setMsg('Connecting your number. This takes a few seconds...','');const j=await api('bos-portal-connect',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({client_id:S.id,code:S.code,waba_id:S.su.waba_id,phone_number_id:S.su.phone_number_id})});S.busy=false;S.code=null;$('steps').innerHTML=(j.steps||[]).map(s=>`<li>${s.ok?'&#9989;':'&#10060;'} ${esc(s.step)}: <span class='hint'>${esc(s.detail)}</span></li>`).join('');if(j.connected){setMsg('WhatsApp connected. Send a message to the number to test the agent.','ok')}else{setMsg((j.errors&&j.errors.join(' '))||j.error||'Connection failed. See the steps below.','err')}await load()}
-function paintDash(){const d=S.data;if(!S.id||!d){$('stats').innerHTML='';$('view').innerHTML=`<div class='empty'>Pick a business at the top, or save the brand form first.</div>`;return}const L=d.leads||[],O=d.orders||[],C=d.conversations||[];const hot=L.filter(l=>['interested','qualified','ready_to_buy'].includes(l.status)).length;const val=O.reduce((a,o)=>a+Number(o.total||0),0);$('stats').innerHTML=[['Leads',L.length],['Interested or better',hot],['Orders',O.length],['Order value',naira(val)]].map(s=>`<div class='stat'><b>${s[1]}</b><span>${s[0]}</span></div>`).join('');for(const b of document.querySelectorAll('.sub button'))b.className=b.dataset.v===S.view?'active':'';if(S.view==='chats')paintChats(L,C);else if(S.view==='leads')paintLeads(L);else paintOrders(O)}
-function paintChats(L,C){const names={};L.forEach(l=>{names[l.phone]=l.name});const by={};C.forEach(m=>{(by[m.phone]=by[m.phone]||[]).push(m)});const phones=Object.keys(by).sort((a,b)=>String(by[b][by[b].length-1].at).localeCompare(String(by[a][by[a].length-1].at)));if(!phones.length){$('view').innerHTML=`<div class='empty'>No chats yet. When customers message the WhatsApp number, their chats show here.</div>`;return}if(!S.person||!by[S.person])S.person=phones[0];const list=phones.map(p=>{const last=by[p][by[p].length-1];return `<div class='person${p===S.person?' active':''}' data-p='${esc(p)}'><b>${esc(names[p]||'+'+p)}</b><small>${esc(last.message)}</small></div>`}).join('');const th=by[S.person].map(m=>`<div class='bubble ${m.direction==='outbound'?'out':'in'}'>${esc(m.message)}<small>${m.kind&&m.kind!=='chat'?esc(nice(m.kind))+' &middot; ':''}${when(m.at)}</small></div>`).join('');$('view').innerHTML=`<div class='chat'><div class='people'>${list}</div><div class='thread' id='thread'><p class='hint'>${esc(names[S.person]||'')} +${esc(S.person)}</p>${th}</div></div>`;document.querySelectorAll('.person').forEach(el=>{el.onclick=()=>{S.person=el.dataset.p;paintDash()}});const t=$('thread');t.scrollTop=t.scrollHeight}
-function paintLeads(L){if(!L.length){$('view').innerHTML=`<div class='empty'>No leads yet.</div>`;return}const rows=L.slice().sort((a,b)=>String(b.last_at).localeCompare(String(a.last_at))).map(l=>`<tr><td><b>${esc(l.name||'Unknown')}</b><br><span class='hint'>+${esc(l.phone)}</span></td><td>${esc(l.interest)}</td><td><span class='tag'>${esc(nice(l.status))}</span></td><td>${esc(l.score)}</td><td>${esc(l.notes)}</td><td>${when(l.last_at)}</td><td>${Number(l.follow_ups)>=3?'Stopped':when(l.next_follow_up)}</td></tr>`).join('');$('view').innerHTML=`<div class='tablewrap'><table><tr><th>Customer</th><th>Wants</th><th>Status</th><th>Score</th><th>What we know</th><th>Last message</th><th>Next follow-up</th></tr>${rows}</table></div>`}
-function paintOrders(O){if(!O.length){$('view').innerHTML=`<div class='empty'>No orders yet.</div>`;return}const rows=O.slice().sort((a,b)=>String(b.created).localeCompare(String(a.created))).map(o=>`<tr><td>${esc(o.order_id)}<br><span class='hint'>${when(o.created)}</span></td><td><b>${esc(o.name||'Unknown')}</b><br><span class='hint'>+${esc(o.phone)}</span></td><td>${esc(o.items)}</td><td>${naira(o.total)}</td><td>${esc(o.address)}</td><td><span class='tag'>${esc(nice(o.status))}</span></td><td style='white-space:pre-wrap'>${esc(o.receipt_check)}</td></tr>`).join('');$('view').innerHTML=`<div class='tablewrap'><table><tr><th>Order</th><th>Customer</th><th>Items</th><th>Total</th><th>Address</th><th>Status</th><th>Receipt check</th></tr>${rows}</table></div>`}
-async function saveBrand(){const f={};FIELDS.forEach(k=>{const el=$('f_'+k);if(el)f[k]=el.value.trim()});const b=$('saveBtn');const m=$('brandMsg');b.disabled=true;m.className='msg';m.textContent='Saving...';const j=await api('bos-portal-brand',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({client_id:S.id,form:f})});b.disabled=false;if(!j.ok){m.className='msg err';m.textContent=(j.errors&&j.errors.join('. '))||j.error||'Could not save.';return}setId(j.client_id);await loadList();await load();fillForm(S.data&&S.data.client);m.className='msg ok';m.textContent='Saved. The agent prompt was built from your answers.';if(!(S.data&&S.data.client&&S.data.client.connected))show('connect')}
-document.querySelectorAll('nav button').forEach(b=>{b.onclick=()=>show(b.dataset.tab)});
-document.querySelectorAll('.sub button').forEach(b=>{b.onclick=()=>{S.view=b.dataset.v;paintDash()}});
-$('saveBtn').onclick=saveBrand;$('connectBtn').onclick=launch;$('refreshBtn').onclick=load;
-$('pick').onchange=async e=>{setId(e.target.value);S.data=null;S.person=null;$('brandMsg').textContent='';$('connMsg').textContent='';$('steps').innerHTML='';if(!S.id){fillForm(null);paint();show('brand');return}await load();fillForm(S.data&&S.data.client)};
+async function finish(){if(S.busy||!S.code)return;if(!S.su){clearTimeout(S.timer);S.timer=setTimeout(()=>{if(!S.su&&!S.busy)setMsg('Facebook finished but did not send the WhatsApp number details. Try again and complete every step in the window.','err')},10000);setMsg('Waiting for the WhatsApp number details from Meta...','');return}clearTimeout(S.timer);S.busy=true;paintConn();setMsg('Connecting your number. This takes a few seconds...','');const j=await post('bos-portal-connect',{client_id:S.id,code:S.code,waba_id:S.su.waba_id,phone_number_id:S.su.phone_number_id});S.busy=false;S.code=null;$('steps').innerHTML=(j.steps||[]).map(s=>`<li>${s.ok?'&#9989;':'&#10060;'} ${esc(s.step)}: <span class='hint'>${esc(s.detail)}</span></li>`).join('');if(j.connected){setMsg('WhatsApp connected. Next, review the AI knowledge.','ok')}else{setMsg((j.errors&&j.errors.join(' '))||j.error||'Connection failed. See the steps below.','err')}await load()}
+
+/* STEP 3: knowledge */
+function paintKnowledge(){const f=getForm();const faqN=lines(f.faqs).filter(l=>l.includes('?')).length||lines(f.faqs).length;const offerN=lines(f.offers).length;const ruleN=6+lines(f.escalation_rules).length+lines(f.qualification_questions).length;const prodN=lines(f.products).length;
+$('knowStats').innerHTML=[['Products',prodN,'Products/services loaded'],['FAQs',faqN,'Approved answers'],['Offers',offerN,'Active offers'],['Sales rules',ruleN,'Approved rules']].map(s=>`<div class='stat'><b>${s[1]}</b><span>${s[0]}</span><em>${s[2]}</em></div>`).join('');
+const pay=!!(f.bank_details||(client()&&client().has_paystack));
+const rows=[['Products & Pricing','What is sold, prices, variants and availability',prodN?['Ready','']:['Missing','bad']],['FAQs','Common customer questions and approved answers',faqN?['Ready','']:['Add some','warn']],['Offers & Promotions','Current offers, eligibility and expiry',offerN?['Ready','']:['None, no discounts','mute']],['Payment & Delivery','Payment methods, delivery areas and timelines',pay&&f.delivery?['Ready','']:['Incomplete','warn']],['Escalation Rules','When Order Padi must hand a chat to a human',['Ready','']]];
+$('knowRows').innerHTML=rows.map(r=>`<li><div><b>${esc(r[0])}</b><small>${esc(r[1])}</small></div>${badge(r[2][0],r[2][1])}</li>`).join('')}
+
+/* STEP 4: approval */
+const checks=items=>items.map(i=>`<li class='${i[1]?'ok':''}'><i>${i[1]?'&#9989;':'&#9675;'}</i><div>${esc(i[0])}${i[2]?`<small>${esc(i[2])}</small>`:''}</div></li>`).join('');
+function paintApproval(){const c=client();const f=getForm();const conn=!!(c&&c.connected);const offerN=lines(f.offers).length;const custom=lines(f.escalation_rules).length;
+$('preChecks').innerHTML=checks([['Business information saved',!!c],['Product pricing confirmed',!!f.products],['Offers and promotions confirmed',true,offerN?offerN+' offer(s)':'No offers. The agent will not give discounts.'],['WhatsApp connection verified',conn],['FAQs reviewed',!!f.faqs],['Payment and delivery rules confirmed',!!((f.bank_details||(c&&c.has_paystack))&&f.delivery)],['Human handoff rules configured',true,'Built-in rules'+(custom?' plus '+custom+' of yours':'')],['Test conversation completed',S.tested,S.tested?'':'Use the test chat below']]);
+const box=$('approveBox');if(!S.id){box.innerHTML=`<p class='hint'>Save the business details first.</p>`;return}
+if(c&&c.approved){box.innerHTML=`<div class='approve'><b>Order Padi is live</b><p class='hint' style='margin:6px 0 0'>Approved ${esc(when(c.approved_at))}. It is answering customers on the connected WhatsApp number.</p><div class='acts'><button class='btn' data-go='live'>Go to Live</button><button class='btn red' id='unapproveBtn'>Pause agent</button></div></div>`;$('unapproveBtn').onclick=()=>approve(false);return}
+box.innerHTML=`<div class='approve'><b>Ready to activate Order Padi?</b><p class='hint' style='margin:6px 0 10px'>Once approved, Order Padi can begin handling customer conversations on the connected WhatsApp number according to the approved knowledge and rules.</p><label style='font-weight:400;display:flex;align-items:center'><input type='checkbox' id='agreeBox'>I have reviewed and approve this setup.</label><div class='acts'><button class='btn' id='approveBtn' disabled>Approve &amp; Launch Order Padi</button></div>${conn?'':`<p class='hint' style='margin:10px 0 0'>Connect WhatsApp in step 2 before launching.</p>`}</div>`;
+const ab=$('approveBtn');$('agreeBox').onchange=e=>{ab.disabled=!(e.target.checked&&conn)};ab.onclick=()=>approve(true)}
+async function approve(on){const m=$('approveMsg');m.className='msg';m.textContent=on?'Launching...':'Pausing...';const j=await post('bos-portal-action',{client_id:S.id,action:on?'approve':'unapprove'});if(!j.ok){m.className='msg err';m.textContent=j.error||'Could not save.';return}m.className='msg ok';m.textContent=on?'Order Padi approved and live.':'Order Padi is paused. It will not answer customers until you approve it again.';await load()}
+function addTest(cls,text,sub){const t=$('testThread');const d=document.createElement('div');d.className='bubble '+cls;d.innerHTML=esc(text)+(sub?`<small>${esc(sub)}</small>`:'');t.appendChild(d);t.scrollTop=t.scrollHeight}
+async function sendTest(){const inp=$('testInput');const text=inp.value.trim();const m=$('testMsg');if(!text)return;if(!S.id){m.className='msg err';m.textContent='Save the business details first.';return}inp.value='';m.textContent='';addTest('in',text,'You (test customer)');$('testSend').disabled=true;const j=await post('bos-agent-test',{client_id:S.id,session:S.session,message:text});$('testSend').disabled=false;if(!j.ok){m.className='msg err';m.textContent=j.error||'The agent did not answer. Try again.';return}addTest('out',j.reply,(client()&&client().form&&client().form.agent_name)||'Order Padi');const notes=[];if(j.temperature)notes.push('Lead: '+j.temperature+(j.stage_note?' · '+j.stage_note:''));if(j.order)notes.push('Test only: an order would be created for '+j.order.items+' ('+naira(j.order.total)+') and payment details sent.');if(j.needs_human)notes.push('Test only: this chat would be handed to a human and the AI paused.');if(notes.length)addTest('sys',notes.join('\n'));if(!S.tested){S.tested=true;paintApproval()}}
+
+/* STEP 5: live */
+function temp(l){if(l.status==='closed_won')return ['WON',''];if(l.status==='lost')return ['LOST','bad'];let t=l.temperature;if(!t){t=l.status==='ready_to_buy'||l.score>=70?'HOT':(['qualified','interested'].includes(l.status)||l.score>=40?'WARM':'NURTURE')}return [t,t==='HOT'?'':'warn']}
+function followDue(l){return !!(l&&!['closed_won','lost'].includes(l.status)&&!l.ai_paused&&((l.next_follow_up&&ts(l.next_follow_up)<Date.now()&&Number(l.follow_ups)<3)||Number(l.follow_ups)>=3))}
+function chatState(l,msgs){if(l&&l.ai_paused){let lastIn=0,lastHuman=0;(msgs||[]).forEach(m=>{const t=ts(m.at);if(m.direction==='inbound')lastIn=Math.max(lastIn,t);if(m.kind==='human')lastHuman=Math.max(lastHuman,t)});return lastHuman&&lastHuman>=lastIn?['Human handling','warn']:['Human needed','bad']}if(l&&l.status==='needs_human')return ['Human needed','bad'];if(followDue(l))return ['Needs follow-up','warn'];return ['AI handling','']}
+function groups(){const d=S.data||{};const L=d.leads||[],C=d.conversations||[];const lead={};L.forEach(l=>{lead[l.phone]=l});const by={};C.forEach(m=>{(by[m.phone]=by[m.phone]||[]).push(m)});L.forEach(l=>{if(!by[l.phone])by[l.phone]=[]});return {lead,by}}
+function paintLive(){const c=client();const d=S.data;const st=agentState();$('liveName').textContent=(c&&c.form&&c.form.agent_name)||'Order Padi';$('liveBadge').className='badge '+(st[1]==='off'?'bad':(st[1]==='warn'?'warn':''));$('liveBadge').textContent=st[1]===''?'Agent active':st[0];
+if(!S.id||!d){$('kpi1').innerHTML='';$('kpi2').innerHTML='';$('setupRows').innerHTML='';$('view').innerHTML=`<div class='empty'>Pick a business at the top, or save the business details first.</div>`;return}
+const L=d.leads||[],O=d.orders||[],C=d.conversations||[];const now=new Date();const mS=new Date(now.getFullYear(),now.getMonth(),1).getTime();const dS=new Date(now.getFullYear(),now.getMonth(),now.getDate()).getTime();
+const convP=new Set(C.filter(m=>ts(m.at)>=mS).map(m=>m.phone));const conv=convP.size;const qual=L.filter(l=>['qualified','ready_to_buy','closed_won'].includes(l.status)&&convP.has(l.phone)).length;const pct=conv?Math.round(qual*100/conv):0;
+const live=O.filter(o=>o.status!=='cancelled');const ordM=live.filter(o=>ts(o.created)>=mS);const valM=ordM.reduce((a,o)=>a+Number(o.total||0),0);
+const ordT=live.filter(o=>ts(o.created)>=dS).length;const pend=O.filter(o=>['pending_payment','receipt_received'].includes(o.status)).length;const paidT=O.filter(o=>o.status==='paid'&&ts(o.paid_at||o.created)>=dS);const revT=paidT.reduce((a,o)=>a+Number(o.total||0),0);
+const card=s=>`<div class='stat'><b>${s[1]}</b><span>${s[0]}</span>${s[2]?`<em>${s[2]}</em>`:''}</div>`;
+$('kpi1').innerHTML=[['Conversations',conv,'This month'],['Qualified leads',qual,pct+'% of conversations'],['Orders',ordM.length,'Closed by Order Padi this month'],['Order value',naira(valM),'This month']].map(card).join('');
+$('kpi2').innerHTML=[['Orders today',ordT],['Pending payment',pend],['Completed today',paidT.length],['Revenue today',naira(revT)]].map(card).join('');
+const f=(c&&c.form)||{};$('setupRows').innerHTML=[['Business information','Business, products, pricing and policies',f.products?['Complete','']:['Missing','bad']],['WhatsApp number','Business WhatsApp connection',c.connected?['Connected','']:['Not connected','bad']],['AI knowledge','Products, FAQs, offers and sales rules',f.products&&f.faqs?['Ready','']:['Incomplete','warn']],['Client approval','Agent approved to speak with customers',c.approved?['Approved','']:['Pending','warn']]].map(r=>`<li><div><b>${esc(r[0])}</b><small>${esc(r[1])}</small></div>${badge(r[2][0],r[2][1])}</li>`).join('');
+const g=groups();const hand=Object.keys(g.by).filter(p=>chatState(g.lead[p],g.by[p])[0].startsWith('Human')).length;
+document.querySelectorAll('#subnav button').forEach(b=>{b.className=b.dataset.v===S.view?'active':'';if(b.dataset.v==='handoff')b.textContent='Human handoff'+(hand?' ('+hand+')':'')});
+if(S.view==='chats')paintChats(g);else if(S.view==='leads')paintLeads(L,g);else if(S.view==='orders')paintOrders(O);else paintHandoff(g)}
+function paintChats(g){const phones=Object.keys(g.by).sort((a,b)=>{const la=g.by[a],lb=g.by[b];return ts(lb.length?lb[lb.length-1].at:(g.lead[b]||{}).last_at)-ts(la.length?la[la.length-1].at:(g.lead[a]||{}).last_at)});
+if(!phones.length){$('view').innerHTML=`<div class='empty'>No chats yet. When customers message the WhatsApp number, their chats show here.</div>`;return}
+if(!S.person||!g.by[S.person])S.person=phones[0];
+const list=phones.map(p=>{const l=g.lead[p]||{};const msgs=g.by[p];const last=msgs[msgs.length-1];const s=chatState(g.lead[p],msgs);return `<div class='person${p===S.person?' active':''}' data-p='${esc(p)}'><b>${esc(l.name||'+'+p)}</b><small>${esc(l.stage_note||l.interest||(last&&last.message)||'')}</small>${badge(s[0],s[1])}</div>`}).join('');
+const l=g.lead[S.person]||{};const s=chatState(g.lead[S.person],g.by[S.person]);
+const th=g.by[S.person].map(m=>{const cls=m.direction!=='outbound'?'in':(m.kind==='human'?'human':'out');const who=m.direction!=='outbound'?'Customer':(m.kind==='human'?'You':'Order Padi'+(m.kind&&m.kind!=='chat'?' · '+nice(m.kind):''));return `<div class='bubble ${cls}'>${esc(m.message)}<small>${esc(who)} · ${when(m.at)}</small></div>`}).join('');
+const bar=l.ai_paused?`<textarea id='replyText' placeholder='Type your reply. It is sent from the business WhatsApp number.'></textarea><div class='acts'><button class='btn sm' id='replyBtn'>Send reply</button><button class='btn ghost sm' id='resumeBtn'>Hand back to AI</button></div><p class='hint' style='margin:8px 0 0'>WhatsApp only allows normal replies within 24 hours of the customer's last message.</p>`:`<div class='acts' style='margin:0'><button class='btn sm' id='takeBtn'>Take over chat</button></div>`;
+$('view').innerHTML=`<div class='chat'><div class='people'>${list}</div><div class='side'><div style='padding:10px 14px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:8px;align-items:center'><div><b>${esc(l.name||'Customer')}</b> <span class='hint'>+${esc(S.person)}</span></div>${badge(s[0],s[1])}</div><div class='thread' id='thread'>${th||`<p class='hint'>No messages yet.</p>`}</div><div class='bar'>${bar}<div id='chatMsg' class='msg'></div></div></div></div>`;
+document.querySelectorAll('.person').forEach(el=>{el.onclick=()=>{S.person=el.dataset.p;paintLive()}});const t=$('thread');t.scrollTop=t.scrollHeight;
+if($('takeBtn'))$('takeBtn').onclick=()=>chatAction('pause');if($('resumeBtn'))$('resumeBtn').onclick=()=>chatAction('resume');if($('replyBtn'))$('replyBtn').onclick=()=>chatAction('reply')}
+async function chatAction(action,phone){phone=phone||S.person;const m=$('chatMsg');const body={client_id:S.id,action:action,phone:phone};if(action==='reply'){body.text=($('replyText')&&$('replyText').value.trim())||'';if(!body.text){if(m){m.className='msg err';m.textContent='Type a message first.'}return}}if(m){m.className='msg';m.textContent=action==='reply'?'Sending...':'Updating...'}const j=await post('bos-portal-action',body);if(!j.ok){if(m){m.className='msg err';m.textContent=j.error||'Could not update.'}else{alert(j.error||'Could not update.')}return}S.person=phone;await load();const m2=$('chatMsg');if(m2){m2.className='msg ok';m2.textContent=action==='pause'?'You have taken over this chat. The AI is paused.':(action==='resume'?'Handed back to Order Padi.':'Reply sent.')}}
+function paintLeads(L,g){if(!L.length){$('view').innerHTML=`<div class='empty'>No leads yet. Every customer conversation becomes a lead with its sales stage.</div>`;return}
+const rows=L.slice().sort((a,b)=>ts(b.last_at)-ts(a.last_at)).map(l=>{const t=temp(l);const sub=[l.interest,l.stage_note,followDue(l)?'Follow-up due':''].filter(Boolean).join(' · ');return `<li><div><b>${esc(l.name||'+'+l.phone)}</b><small>WhatsApp · ${esc(sub||nice(l.status))}</small></div><div style='text-align:right'>${badge(t[0],t[1])}<small>Score ${esc(l.score)}</small></div></li>`}).join('');
+$('view').innerHTML=`<div class='card'><ul class='rows'>${rows}</ul></div>`}
+function paintOrders(O){if(!O.length){$('view').innerHTML=`<div class='empty'>No orders yet. Orders created in WhatsApp chats show here.</div>`;return}
+const lab={pending_payment:['Awaiting payment','warn'],receipt_received:['Receipt received','warn'],paid:['Paid',''],cancelled:['Cancelled','bad']};
+const rows=O.slice().sort((a,b)=>ts(b.created)-ts(a.created)).map(o=>{const s=lab[o.status]||[nice(o.status),'mute'];return `<tr><td>${esc(o.order_id)}<br><span class='hint'>${when(o.created)}</span></td><td><b>${esc(o.name||'Unknown')}</b><br><span class='hint'>+${esc(o.phone)}</span></td><td>${esc(o.items)}</td><td>${naira(o.total)}</td><td>${esc(o.address)}</td><td>${badge(s[0],s[1])}</td><td style='white-space:pre-wrap'>${esc(o.receipt_check)}</td></tr>`}).join('');
+$('view').innerHTML=`<div class='tablewrap'><table><tr><th>Order</th><th>Customer</th><th>Items</th><th>Total</th><th>Address</th><th>Status</th><th>Receipt check</th></tr>${rows}</table></div>`}
+function paintHandoff(g){const ps=Object.keys(g.by).filter(p=>chatState(g.lead[p],g.by[p])[0].startsWith('Human'));
+const note=`<div class='note' style='margin:0 0 12px'>Order Padi should not invent answers, promise unsupported outcomes, approve exceptions, or handle sensitive issues beyond its approved rules. Those conversations are handed to a human.</div>`;
+if(!ps.length){$('view').innerHTML=note+`<div class='empty'>No chats need a human right now.</div>`;return}
+const rows=ps.map(p=>{const l=g.lead[p]||{};const msgs=g.by[p];const lastIn=msgs.filter(m=>m.direction!=='outbound').pop();const s=chatState(l,msgs);return `<li><div><b>${esc(l.name||'+'+p)}${l.stage_note?' · '+esc(l.stage_note):''}</b><small>${esc((lastIn&&lastIn.message)||l.interest||'')}</small></div><div style='display:flex;gap:6px;align-items:center'>${badge(s[0],s[1])}<button class='btn sm' data-open='${esc(p)}'>Open chat</button></div></li>`}).join('');
+$('view').innerHTML=note+`<div class='card'><ul class='rows'>${rows}</ul></div>`;document.querySelectorAll('[data-open]').forEach(b=>{b.onclick=()=>{S.person=b.dataset.open;S.view='chats';paintLive()}})}
+
+/* wiring */
+document.querySelectorAll('#nav button').forEach(b=>{b.onclick=()=>show(b.dataset.tab)});
+document.addEventListener('click',e=>{const g=e.target.closest('[data-go]');if(g)show(g.dataset.go)});
+document.querySelectorAll('#subnav button').forEach(b=>{b.onclick=()=>{S.view=b.dataset.v;paintLive()}});
+$('saveBiz').onclick=()=>saveForm('saveBiz','bizMsg','Saved.',()=>client()&&client().connected?'knowledge':'whatsapp');
+$('saveKnow').onclick=()=>saveForm('saveKnow','knowMsg','Knowledge saved.',()=>'approval');
+['f_products','f_faqs','f_offers','f_escalation_rules','f_qualification_questions','f_delivery','f_bank_details'].forEach(i=>$(i).addEventListener('input',()=>{paintKnowledge();paintApproval()}));
+$('connectBtn').onclick=launch;$('refreshBtn').onclick=load;
+$('testSend').onclick=sendTest;$('testInput').addEventListener('keydown',e=>{if(e.key==='Enter')sendTest()});
+$('testReset').onclick=()=>{S.session=newSession();$('testThread').innerHTML='';$('testMsg').textContent=''};
+$('pick').onchange=async e=>{setId(e.target.value);S.data=null;S.person=null;S.tested=false;S.session=newSession();$('testThread').innerHTML='';['bizMsg','knowMsg','connMsg','approveMsg','testMsg'].forEach(i=>$(i).textContent='');$('steps').innerHTML='';if(!S.id){fillForm(null);show('business');return}await load();fillForm(client());paint()};
+setInterval(()=>{if(S.tab!=='live'||!S.id||document.hidden)return;const r=$('replyText');if(r&&(r.value.trim()||document.activeElement===r))return;load(true)},15000);
 window.fbAsyncInit=function(){FB.init({appId:APP_ID,autoLogAppEvents:true,xfbml:true,version:'v25.0'})};
-(async()=>{let id=new URL(location.href).searchParams.get('client');if(!id){try{id=localStorage.getItem('bosClient')}catch(e){}}await loadList();if(id){setId(id);await load();if(S.data&&S.data.client){fillForm(S.data.client)}else{setId(null)}}paint()})();
+(async()=>{let id=new URL(location.href).searchParams.get('client');if(!id){try{id=localStorage.getItem('bosClient')}catch(e){}}await loadList();if(id){setId(id);await load();if(client()){fillForm(client());paint()}else{setId(null)}}paint()})();
 </script>
 <script async defer crossorigin='anonymous' src='https://connect.facebook.net/en_US/sdk.js'></script>
 </body></html>
